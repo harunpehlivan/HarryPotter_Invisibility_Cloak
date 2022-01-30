@@ -9,14 +9,14 @@ out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
 cap = cv2.VideoCapture(0)
 time.sleep(3)
 background=0
-for i in range(30):
+for _ in range(30):
 	ret,background = cap.read()
 
 background = np.flip(background,axis=1)
 
 while(cap.isOpened()):
 	ret, img = cap.read()
-        
+
 	img = np.flip(img,axis=1)
 	hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
@@ -31,10 +31,10 @@ while(cap.isOpened()):
 
 	mask = mask1 + mask2
 	mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, np.ones((3,3),np.uint8))
-	
+
 	img[np.where(mask==255)] = background[np.where(mask==255)]
 	out.write(img)
-	
+
 	cv2.imshow('Invisibility Cloak',img)
 	k = cv2.waitKey(10)
 	if k == 27:
